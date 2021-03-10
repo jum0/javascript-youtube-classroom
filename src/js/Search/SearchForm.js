@@ -4,7 +4,7 @@ import {
   API_END_POINT,
   LOCAL_STORAGE_KEY,
 } from "../constants.js";
-import { $ } from "../utils/querySelector.js";
+import { $ } from "../utils/DOM.js";
 import deliveryMan from "../deliveryMan.js";
 
 export default class SearchForm {

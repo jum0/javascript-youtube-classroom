@@ -1,5 +1,6 @@
 import { CLASSNAME, MESSAGE } from "../constants.js";
 import deliveryMan from "../deliveryMan.js";
+import { $ } from "./DOM.js";
 
 export const SKELETON_TEMPLATE = `
 <article class="clip skeleton">
@@ -52,9 +53,9 @@ const removeSkeletonUI = ($video) => {
     `.${CLASSNAME.SAVE_VIDEO_BUTTON_WRAPPER}`
   );
 
-  $saveVideoButtonWrapper.classList.remove(CLASSNAME.HIDDEN);
+  $.show($saveVideoButtonWrapper);
 
-  $video.classList.remove(CLASSNAME.SKELETON);
+  $.removeClass($video, CLASSNAME.SKELETON);
 };
 
 export const render = ($video, item) => {
@@ -91,7 +92,7 @@ export const render = ($video, item) => {
 
   deliveryMan.deliverMessage(MESSAGE.HIDE_IF_VIDEO_IS_SAVED, {
     videoId,
-    callback: () => $saveVideoButton.classList.add(CLASSNAME.HIDDEN),
+    callback: () => $.hide($saveVideoButton),
   });
 
   removeSkeletonUI($video);

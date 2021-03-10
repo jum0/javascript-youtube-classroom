@@ -6,7 +6,7 @@ import {
   SCROLL_EVENT_THRESHOLD,
   THROTTLE_TIME_IN_MS,
 } from "../constants.js";
-import { $ } from "../utils/querySelector.js";
+import { $ } from "../utils/DOM.js";
 import deliveryMan from "../deliveryMan.js";
 import { SKELETON_TEMPLATE, render } from "../utils/videoInfo.js";
 
@@ -19,7 +19,7 @@ export default class SearchVideoWrapper {
     this.$notFoundImg = $(CLASSNAME.NOT_FOUND_IMAGE);
 
     deliveryMan.addMessageListener(MESSAGE.KEYWORD_SUBMITTED, ({ query }) => {
-      this.$notFoundImg.classList.add(CLASSNAME.HIDDEN);
+      $.hide(this.$notFoundImg);
       this.$searchVideoWrapper.innerHTML = "";
       this.currentQuery = query;
       this.mountTemplate();
@@ -30,7 +30,8 @@ export default class SearchVideoWrapper {
       ({ nextPageToken, items }) => {
         if (items.length === 0) {
           this.$searchVideoWrapper.innerHTML = "";
-          this.$notFoundImg.classList.remove(CLASSNAME.HIDDEN);
+          $.show(this.$notFoundImg);
+
           return;
         }
 
@@ -56,7 +57,7 @@ export default class SearchVideoWrapper {
   saveVideo($button) {
     const { videoId } = $button.dataset;
     deliveryMan.deliverMessage(MESSAGE.SAVE_VIDEO_BUTTON_CLICKED, { videoId });
-    $button.classList.add(CLASSNAME.HIDDEN);
+    $.hide($button);
   }
 
   mountTemplate() {

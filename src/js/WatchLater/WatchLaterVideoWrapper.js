@@ -5,7 +5,7 @@ import {
   CLASSNAME,
 } from "../constants.js";
 import deliveryMan from "../deliveryMan.js";
-import { $, $show, $hide } from "../utils/querySelector.js";
+import { $ } from "../utils/DOM.js";
 
 export default class WatchLaterVideoWrapper {
   constructor() {
@@ -52,12 +52,12 @@ export default class WatchLaterVideoWrapper {
 
   render() {
     if (this.savedVideoIds.length === 0) {
-      $show(this.$noSavedVideoImage);
+      $.show(this.$noSavedVideoImage);
 
       return;
     }
 
-    $hide(this.$noSavedVideoImage);
+    $.hide(this.$noSavedVideoImage);
   }
 
 }

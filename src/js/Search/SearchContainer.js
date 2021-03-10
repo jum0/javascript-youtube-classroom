@@ -1,5 +1,5 @@
 import { CLASSNAME } from "../constants.js";
-import { $ } from "../utils/querySelector.js";
+import { $ } from "../utils/DOM.js";
 import SearchForm from "./SearchForm.js";
 import KeywordHistory from "./KeywordHistory.js";
 import SearchVideoWrapper from "./SearchVideoWrapper.js";
@@ -22,10 +22,10 @@ export default class SearchContainer {
   }
 
   open() {
-    this.$modal.classList.add(CLASSNAME.OPEN);
+    $.open(this.$modal);
   }
 
   close() {
-    this.$modal.classList.remove(CLASSNAME.OPEN);
+    $.close(this.$modal);
   }
 }

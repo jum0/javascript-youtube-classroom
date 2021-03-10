@@ -5,7 +5,7 @@ import {
   LOCAL_STORAGE_KEY,
 } from "../constants.js";
 import deliveryMan from "../deliveryMan.js";
-import { $ } from "../utils/querySelector.js";
+import { $ } from "../utils/DOM.js";
 
 export default class SavedVideosCount {
   constructor() {

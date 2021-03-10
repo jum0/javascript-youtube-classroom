@@ -1,5 +1,5 @@
 import { CLASSNAME } from "./constants.js";
-import { $ } from "./utils/querySelector.js";
+import { $ } from "./utils/DOM.js";
 import SearchContainer from "./Search/SearchContainer.js";
 import WatchLaterContainer from "./WatchLater/WatchLaterContainer.js";
 
