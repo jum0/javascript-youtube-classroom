@@ -23,6 +23,7 @@ export default class SearchVideoWrapper {
       this.$searchVideoWrapper.innerHTML = "";
       this.currentQuery = query;
       this.mountTemplate();
+      this.$searchVideoWrapper.scrollTo({ top: 0 });
     });
 
     deliveryMan.addMessageListener(
