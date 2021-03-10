@@ -12,15 +12,13 @@ export default class SearchForm {
     this.query =
       JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY.QUERY)) || "";
 
-    this.$youtubeSearchForm = $(CLASSNAME.YOUTUBE_SEARCH_FORM);
-    this.$youtubeSearchFormInput = $(CLASSNAME.YOUTUBE_SEARCH_FORM_INPUT);
+    this.$youtubeSearchForm = $(CLASSNAME.SEARCH_FORM);
+    this.$youtubeSearchFormInput = $(CLASSNAME.SEARCH_FORM_INPUT);
 
     this.$youtubeSearchForm.addEventListener(
       "submit",
       this.handleFormSubmit.bind(this)
     );
-
-    this.fetchData();
   }
 
   handleFormSubmit(event) {

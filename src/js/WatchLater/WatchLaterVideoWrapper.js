@@ -7,12 +7,13 @@ import {
 import deliveryMan from "../deliveryMan.js";
 import { $, $show, $hide } from "../utils/querySelector.js";
 
-export default class WatchLater {
+export default class WatchLaterVideoWrapper {
   constructor() {
     this.savedVideoIds =
       JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY.SAVED_VIDEO_IDS)) || [];
 
     this.$noSavedVideoImage = $(CLASSNAME.NO_SAVED_VIDEO_IMAGE);
+    this.$watchLaterVideoWrapper = $(CLASSNAME.WATCH_LATER_VIDEO_WRAPPER);
 
     deliveryMan.addMessageListener(
       MESSAGE.SAVE_VIDEO_BUTTON_CLICKED,
@@ -24,7 +25,7 @@ export default class WatchLater {
       this.hideIfVideoIsSaved.bind(this)
     );
 
-    this.render();
+    this.render(); // 전체 렌더
   }
 
   saveVideoId({ videoId }) {
@@ -40,7 +41,7 @@ export default class WatchLater {
       savedVideosCount: this.savedVideoIds.length,
     });
 
-    this.render();
+    this.render(); // 하나만 렌더
   }
 
   hideIfVideoIsSaved({ videoId, callback }) {
@@ -52,9 +53,11 @@ export default class WatchLater {
   render() {
     if (this.savedVideoIds.length === 0) {
       $show(this.$noSavedVideoImage);
+
       return;
     }
 
     $hide(this.$noSavedVideoImage);
   }
+
 }

@@ -17,16 +17,21 @@
                 👁️ 볼 영상
               </button>
               <button class="js-history-tab btn mx-1">✅ 본 영상</button>
-              <button class="js-video-search-tab btn mx-1">
-                🔍 동영상 검색
-              </button>
+              <button class="js-search-tab btn mx-1">🔍 동영상 검색</button>
             </nav>
           </header>
           <main class="mt-10">
-            <div class="d-flex justify-center">
-              <img class="js-no-saved-video-img --hidden" src="./src/images/status/empty-box.png" alt="저장된 비디오 없음">
-            </div>
-            <!-- <section class="video-wrapper">
+            <section class="js-watch-later-container">
+              <div class="d-flex justify-center">
+                <img
+                  class="js-no-saved-video-img --hidden"
+                  src="./src/images/status/empty-box.png"
+                  alt="저장된 비디오 없음"
+                />
+              </div>
+              <section class="js-watch-later-video-wrapper video-wrapper">
+                <!-- 
+                
               <article class="clip">
                 <div class="preview-container">
                   <iframe
@@ -59,13 +64,25 @@
                     </div>
                   </div>
                 </div>
-              </article>
-            </section> -->
+              </article>-->
+              </section>
+            </section>
+
+            <section class="js-history-container">
+              <div class="d-flex justify-center">
+                <!-- <img
+                  class="js-no-saved-video-img --hidden"
+                  src="./src/images/status/empty-box.png"
+                  alt="저장된 비디오 없음"
+                /> -->
+              </div>
+              <section class="js-history-wrapper video-wrapper"></section>
+            </section>
           </main>
         </div>
       </div>
       <div class="modal">
-        <div class="modal-inner p-8">
+        <div class="js-search-container modal-inner p-8">
           <button class="modal-close">
             <svg viewbox="0 0 40 40">
               <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
@@ -74,17 +91,17 @@
           <header>
             <h2 class="text-center">🔎 유튜브 검색</h2>
           </header>
-          <form class="js-youtube-search-form d-flex">
+          <form class="js-search-form d-flex">
             <input
               type="text"
-              class="js-youtube-search-form__input w-100 mr-2 pl-2"
+              class="js-search-form__input w-100 mr-2 pl-2"
               placeholder="검색"
-              name="js-youtube-search-form__input"
+              name="js-search-form__input"
               required
             />
             <button
               type="submit"
-              class="js-youtube-search-form__button btn bg-cyan-500"
+              class="js-search-form__button btn bg-cyan-500"
             >
               검색
             </button>
@@ -105,7 +122,7 @@
               src="./src/images/status/not_found.png"
               alt="검색 결과 없음"
             />
-            <section class="js-modal-video-wrapper video-wrapper"></section>
+            <section class="js-search-video-wrapper video-wrapper"></section>
           </section>
         </div>
       </div>

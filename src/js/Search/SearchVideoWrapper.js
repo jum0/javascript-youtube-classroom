@@ -10,17 +10,17 @@ import { $ } from "../utils/querySelector.js";
 import deliveryMan from "../deliveryMan.js";
 import { SKELETON_TEMPLATE, render } from "../utils/videoInfo.js";
 
-export default class VideoWrapper {
+export default class SearchVideoWrapper {
   constructor() {
     this.currentQuery = "";
     this.currentNextPageToken = "";
 
-    this.$modalVideoWrapper = $(CLASSNAME.MODAL_VIDEO_WRAPPER);
+    this.$searchVideoWrapper = $(CLASSNAME.SEARCH_VIDEO_WRAPPER);
     this.$notFoundImg = $(CLASSNAME.NOT_FOUND_IMAGE);
 
     deliveryMan.addMessageListener(MESSAGE.KEYWORD_SUBMITTED, ({ query }) => {
       this.$notFoundImg.classList.add(CLASSNAME.HIDDEN);
-      this.$modalVideoWrapper.innerHTML = "";
+      this.$searchVideoWrapper.innerHTML = "";
       this.currentQuery = query;
       this.mountTemplate();
     });
@@ -29,7 +29,7 @@ export default class VideoWrapper {
       MESSAGE.DATA_LOADED,
       ({ nextPageToken, items }) => {
         if (items.length === 0) {
-          this.$modalVideoWrapper.innerHTML = "";
+          this.$searchVideoWrapper.innerHTML = "";
           this.$notFoundImg.classList.remove(CLASSNAME.HIDDEN);
           return;
         }
@@ -38,12 +38,12 @@ export default class VideoWrapper {
       }
     );
 
-    this.$modalVideoWrapper.addEventListener(
+    this.$searchVideoWrapper.addEventListener(
       "scroll",
       this.handlePageScroll.bind(this)
     );
 
-    this.$modalVideoWrapper.addEventListener("click", (event) => {
+    this.$searchVideoWrapper.addEventListener("click", (event) => {
       if (!event.target.classList.contains(CLASSNAME.SAVE_VIDEO_BUTTON)) {
         return;
       }
@@ -61,7 +61,7 @@ export default class VideoWrapper {
 
   mountTemplate() {
     Array.from({ length: MAX_RESULTS_COUNT }).forEach(() => {
-      this.$modalVideoWrapper.insertAdjacentHTML(
+      this.$searchVideoWrapper.insertAdjacentHTML(
         "beforeEnd",
         SKELETON_TEMPLATE
       );
@@ -71,7 +71,7 @@ export default class VideoWrapper {
   attachData({ nextPageToken, items }) {
     this.currentNextPageToken = nextPageToken;
 
-    const $$videos = Array.from(this.$modalVideoWrapper.children).slice(
+    const $$videos = Array.from(this.$searchVideoWrapper.children).slice(
       -MAX_RESULTS_COUNT
     );
 
@@ -82,9 +82,9 @@ export default class VideoWrapper {
 
   handlePageScroll() {
     if (
-      this.$modalVideoWrapper.scrollTop +
-        this.$modalVideoWrapper.clientHeight <=
-      this.$modalVideoWrapper.scrollHeight * SCROLL_EVENT_THRESHOLD
+      this.$searchVideoWrapper.scrollTop +
+        this.$searchVideoWrapper.clientHeight <=
+      this.$searchVideoWrapper.scrollHeight * SCROLL_EVENT_THRESHOLD
     ) {
       return;
     }
