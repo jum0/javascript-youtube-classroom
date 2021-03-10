@@ -2,36 +2,52 @@ import { CLASSNAME, MESSAGE } from "../constants.js";
 import deliveryMan from "../deliveryMan.js";
 import { $ } from "./DOM.js";
 
-export const SKELETON_TEMPLATE = `
-<article class="clip skeleton">
-<div class="preview-container">
-<iframe
-class="image js-video-id"
-width="100%"
-  height="118"
-  frameborder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-  allowfullscreen
-></iframe>
+const SAVED_VIDEO_BUTTON_TEMPLATE = `
+<div class="d-flex justify-end --hidden js-save-video-button-wrapper">
+  <button class="btn js-save-video-button">⬇️ 저장</button> 
 </div>
-<div class="content-container pt-2 px-1">
-  <h3 class="line js-video-title"></h3>
-  <div>
-    <a
-      target="_blank"
-      class="line channel-name mt-1 js-channel-title"
-    >
-    </a>
-    <div class="line meta">
-      <p class="js-published-at">
-      </p>
-    </div>
-    <div class="d-flex justify-end --hidden js-save-video-button-wrapper">
-      <button class="btn js-save-video-button">⬇️ 저장</button> 
+`;
+
+const ICON_BUTTONS_TEMPLATE = `
+<div>
+  <span class="opacity-hover">✅</span>
+  <span class="opacity-hover">👍</span>
+  <span class="opacity-hover">💬</span>
+  <span class="opacity-hover">🗑️</span>
+</div>`;
+
+const GENERATE_TEMPLATE = (buttonTemplate) => `
+<article class="clip skeleton">
+  <div class="preview-container">
+    <iframe
+    class="image js-video-id"
+    width="100%"
+      height="118"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+  </div>
+  <div class="content-container pt-2 px-1">
+    <h3 class="line js-video-title"></h3>
+    <div>
+      <a
+        target="_blank"
+        class="line channel-name mt-1 js-channel-title"
+      >
+      </a>
+      <div class="line meta">
+        <p class="js-published-at">
+        </p>
+      </div>
+      ${buttonTemplate}
     </div>
   </div>
-</div>
 </article>`;
+
+const SEARCH_VIDEO_TEMPLATE = GENERATE_TEMPLATE(SAVED_VIDEO_BUTTON_TEMPLATE);
+
+const VIDEO_TEMPLATE = GENERATE_TEMPLATE(ICON_BUTTONS_TEMPLATE);
 
 const createVideoInfo = (item) => {
   const {
@@ -48,17 +64,7 @@ const createVideoInfo = (item) => {
   };
 };
 
-const removeSkeletonUI = ($video) => {
-  const $saveVideoButtonWrapper = $video.querySelector(
-    `.${CLASSNAME.SAVE_VIDEO_BUTTON_WRAPPER}`
-  );
-
-  $.show($saveVideoButtonWrapper);
-
-  $.removeClass($video, CLASSNAME.SKELETON);
-};
-
-export const render = ($video, item) => {
+const renderVideo = ($video, item) => {
   const {
     videoId,
     title,
@@ -71,9 +77,6 @@ export const render = ($video, item) => {
   const $videoTitle = $video.querySelector(`.${CLASSNAME.VIDEO_TITLE}`);
   const $channelTitle = $video.querySelector(`.${CLASSNAME.CHANNEL_TITLE}`);
   const $publishedAt = $video.querySelector(`.${CLASSNAME.PUBLISHED_AT}`);
-  const $saveVideoButton = $video.querySelector(
-    `.${CLASSNAME.SAVE_VIDEO_BUTTON}`
-  );
 
   $iframe.src = `https://www.youtube.com/embed/${videoId}`;
 
@@ -88,12 +91,34 @@ export const render = ($video, item) => {
     day: "numeric",
   });
 
+  $.removeClass($video, CLASSNAME.SKELETON);
+};
+
+const renderSearchVideo = ($video, item) => {
+  renderVideo($video, item);
+
+  const { videoId } = item.id;
+
+  const $saveVideoButton = $video.querySelector(
+    `.${CLASSNAME.SAVE_VIDEO_BUTTON}`
+  );
+  const $saveVideoButtonWrapper = $video.querySelector(
+    `.${CLASSNAME.SAVE_VIDEO_BUTTON_WRAPPER}`
+  );
+
   $saveVideoButton.dataset.videoId = videoId;
+
+  $.show($saveVideoButtonWrapper);
 
   deliveryMan.deliverMessage(MESSAGE.HIDE_IF_VIDEO_IS_SAVED, {
     videoId,
     callback: () => $.hide($saveVideoButton),
   });
+};
 
-  removeSkeletonUI($video);
+export {
+  SEARCH_VIDEO_TEMPLATE,
+  VIDEO_TEMPLATE,
+  renderVideo,
+  renderSearchVideo,
 };

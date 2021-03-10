@@ -8,7 +8,10 @@ import {
 } from "../constants.js";
 import { $ } from "../utils/DOM.js";
 import deliveryMan from "../deliveryMan.js";
-import { SKELETON_TEMPLATE, render } from "../utils/videoInfo.js";
+import {
+  renderSearchVideo,
+  SEARCH_VIDEO_TEMPLATE,
+} from "../utils/videoInfo.js";
 
 export default class SearchVideoWrapper {
   constructor() {
@@ -69,7 +72,7 @@ export default class SearchVideoWrapper {
     Array.from({ length: MAX_RESULTS_COUNT }).forEach(() => {
       this.$searchVideoWrapper.insertAdjacentHTML(
         "beforeEnd",
-        SKELETON_TEMPLATE
+        SEARCH_VIDEO_TEMPLATE
       );
     });
   }
@@ -87,7 +90,7 @@ export default class SearchVideoWrapper {
         const { videoId } = item.id;
         this.videoItemsMap.set(videoId, item);
 
-        render($video, item);
+        renderSearchVideo($video, item);
       });
   }
 
@@ -105,7 +108,7 @@ export default class SearchVideoWrapper {
     this.throttle = setTimeout(async () => {
       await this.loadData();
       this.throttle = null;
-    }, THROTTLE_TIME_IN_MS);
+    }, 0);
   }
 
   async loadData() {

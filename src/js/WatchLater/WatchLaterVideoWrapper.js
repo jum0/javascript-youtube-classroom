@@ -6,7 +6,7 @@ import {
 } from "../constants.js";
 import deliveryMan from "../deliveryMan.js";
 import { $ } from "../utils/DOM.js";
-import { render, SKELETON_TEMPLATE } from "../utils/videoInfo.js";
+import { renderVideo, VIDEO_TEMPLATE } from "../utils/videoInfo.js";
 
 export default class WatchLaterVideoWrapper {
   constructor() {
@@ -37,7 +37,6 @@ export default class WatchLaterVideoWrapper {
       this.savedVideoItemsMap = new Map(
         Array.from(this.savedVideoItemsMap).slice(-MAX_SAVED_VIDEOS_COUNT)
       );
-
       this.$watchLaterVideoWrapper.children[
         this.$watchLaterVideoWrapper.childElementCount - 1
       ].remove();
@@ -80,10 +79,10 @@ export default class WatchLaterVideoWrapper {
 
     this.$watchLaterVideoWrapper.insertAdjacentHTML(
       "afterBegin",
-      SKELETON_TEMPLATE
+      VIDEO_TEMPLATE
     );
 
     const $video = this.$watchLaterVideoWrapper.children[0];
-    render($video, item);
+    renderVideo($video, item);
   }
 }
