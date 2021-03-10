@@ -39,7 +39,7 @@ const MESSAGE = Object.freeze({
 });
 
 const LOCAL_STORAGE_KEY = Object.freeze({
-  SAVED_VIDEO_IDS: "savedVideoIds",
+  SAVED_VIDEO_ITEMS: "savedVideoItems",
   SAVED_VIDEOS_COUNT: "savedVideosCount",
   KEYWORD_HISTORY: "keywordHistory",
   QUERY: "query",

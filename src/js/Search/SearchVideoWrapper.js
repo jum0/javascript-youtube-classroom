@@ -14,6 +14,7 @@ export default class SearchVideoWrapper {
   constructor() {
     this.currentQuery = "";
     this.currentNextPageToken = "";
+    this.videoItemsMap = new Map();
 
     this.$searchVideoWrapper = $(CLASSNAME.SEARCH_VIDEO_WRAPPER);
     this.$notFoundImg = $(CLASSNAME.NOT_FOUND_IMAGE);
@@ -57,7 +58,10 @@ export default class SearchVideoWrapper {
   // eslint-disable-next-line class-methods-use-this
   saveVideo($button) {
     const { videoId } = $button.dataset;
-    deliveryMan.deliverMessage(MESSAGE.SAVE_VIDEO_BUTTON_CLICKED, { videoId });
+    deliveryMan.deliverMessage(MESSAGE.SAVE_VIDEO_BUTTON_CLICKED, {
+      videoId,
+      item: this.videoItemsMap.get(videoId),
+    });
     $.hide($button);
   }
 
@@ -79,7 +83,12 @@ export default class SearchVideoWrapper {
 
     Array.from({ length: MAX_RESULTS_COUNT })
       .map((_, i) => [$$videos[i], items[i]])
-      .forEach(([$video, item]) => render($video, item));
+      .forEach(([$video, item]) => {
+        const { videoId } = item.id;
+        this.videoItemsMap.set(videoId, item);
+
+        render($video, item);
+      });
   }
 
   handlePageScroll() {
