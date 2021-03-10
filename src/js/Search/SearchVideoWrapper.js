@@ -83,6 +83,8 @@ export default class SearchVideoWrapper {
   }
 
   handlePageScroll() {
+    if (this.throttle) return;
+
     if (
       this.$searchVideoWrapper.scrollTop +
         this.$searchVideoWrapper.clientHeight <=
@@ -91,11 +93,9 @@ export default class SearchVideoWrapper {
       return;
     }
 
-    if (this.throttle) return;
-
-    this.throttle = setTimeout(() => {
+    this.throttle = setTimeout(async () => {
+      await this.loadData();
       this.throttle = null;
-      this.loadData();
     }, THROTTLE_TIME_IN_MS);
   }
 
