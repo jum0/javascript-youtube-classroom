@@ -29,6 +29,10 @@ const CLASSNAME = Object.freeze({
   OPEN: "open",
   HIDDEN: "--hidden",
   BG_CYAN_100: "bg-cyan-100",
+  WATCHED_ICON: "js-watched-icon",
+  LIKE_ICON: "js-like-icon",
+  COMMENT_ICON: "js-comment-icon",
+  DELETE_ICON: "js-delete-icon",
 });
 
 const MESSAGE = Object.freeze({

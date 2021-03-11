@@ -10,10 +10,10 @@ const SAVED_VIDEO_BUTTON_TEMPLATE = `
 
 const ICON_BUTTONS_TEMPLATE = `
 <div>
-  <span class="opacity-hover">✅</span>
-  <span class="opacity-hover">👍</span>
-  <span class="opacity-hover">💬</span>
-  <span class="opacity-hover">🗑️</span>
+  <span class="${CLASSNAME.WATCHED_ICON} opacity-hover">✅</span>
+  <span class="${CLASSNAME.LIKE_ICON} opacity-hover">👍</span>
+  <span class="${CLASSNAME.COMMENT_ICON} opacity-hover">💬</span>
+  <span class="${CLASSNAME.DELETE_ICON} opacity-hover">🗑️</span>
 </div>`;
 
 const GENERATE_TEMPLATE = (buttonTemplate) => `
