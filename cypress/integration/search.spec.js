@@ -10,6 +10,7 @@ describe("유투브 검색 API를 이용하여 영상들을 검색할 수 있다
     beforeEach(() => {
       cy.visit("/");
       cy.get(`.${CLASSNAME.SEARCH_TAB}`).click();
+      cy.clearLocalStorage();
 
       cy.intercept({
         url: REDIRECT_SERVER_HOST,
@@ -27,7 +28,7 @@ describe("유투브 검색 API를 이용하여 영상들을 검색할 수 있다
     });
 
     it("검색 결과가 없는 경우, 검색 결과 없음 이미지가 나타난다.", () => {
-      cy.get(`.${CLASSNAME.SEARCH_FORM_INPUT}`).type("./");
+      cy.get(`.${CLASSNAME.SEARCH_FORM_INPUT}`).type("aps9odfuiaso9dpfklasd");
       cy.get(`.${CLASSNAME.SEARCH_FORM_BUTTON}`).click();
       cy.wait("@searchFromKeyword");
 
