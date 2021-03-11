@@ -9,7 +9,7 @@ const SAVED_VIDEO_BUTTON_TEMPLATE = `
 `;
 
 const ICON_BUTTONS_TEMPLATE = `
-<div>
+<div class=${CLASSNAME.ICONS_WRAPPER}>
   <span class="${CLASSNAME.WATCHED_ICON} opacity-hover">✅</span>
   <span class="${CLASSNAME.LIKE_ICON} opacity-hover">👍</span>
   <span class="${CLASSNAME.COMMENT_ICON} opacity-hover">💬</span>
@@ -94,6 +94,16 @@ const renderVideo = ($video, item) => {
   $.removeClass($video, CLASSNAME.SKELETON);
 };
 
+const renderWatchLaterVideo = ($video, item) => {
+  renderVideo($video, item);
+
+  const { videoId } = item.id;
+
+  const $iconsWrapper = $video.querySelector(`.${CLASSNAME.ICONS_WRAPPER}`);
+
+  $iconsWrapper.dataset.videoId = videoId;
+};
+
 const renderSearchVideo = ($video, item) => {
   renderVideo($video, item);
 
@@ -119,6 +129,6 @@ const renderSearchVideo = ($video, item) => {
 export {
   SEARCH_VIDEO_TEMPLATE,
   VIDEO_TEMPLATE,
-  renderVideo,
+  renderWatchLaterVideo,
   renderSearchVideo,
 };

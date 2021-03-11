@@ -6,13 +6,15 @@ import {
 } from "../constants.js";
 import deliveryMan from "../deliveryMan.js";
 import { $ } from "../utils/DOM.js";
-import { renderVideo, VIDEO_TEMPLATE } from "../utils/videoInfo.js";
+import { renderWatchLaterVideo, VIDEO_TEMPLATE } from "../utils/videoInfo.js";
 
 export default class WatchLaterVideoWrapper {
   constructor() {
     this.savedVideoItemsMap = new Map(
       JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY.SAVED_VIDEO_ITEMS))
     );
+
+    this.savedVideosMap = new Map();
 
     this.$noSavedVideoImage = $(CLASSNAME.NO_SAVED_VIDEO_IMAGE);
     this.$watchLaterVideoWrapper = $(CLASSNAME.WATCH_LATER_VIDEO_WRAPPER);
@@ -27,7 +29,30 @@ export default class WatchLaterVideoWrapper {
       this.hideIfVideoIsSaved.bind(this)
     );
 
-    this.render(); // 전체 렌더
+    this.$watchLaterVideoWrapper.addEventListener("click", (event) => {
+      if (event.target.classList.contains(CLASSNAME.DELETE_ICON)) {
+        // eslint-disable-next-line no-alert
+        if (window.confirm("정말 삭제하시겠습니까?")) {
+          const { videoId } = event.target.parentElement.dataset;
+          this.deleteVideo(videoId);
+        }
+      }
+    });
+
+    this.render();
+  }
+
+  deleteVideo(videoId) {
+    this.savedVideoItemsMap.delete(videoId);
+
+    this.updateLocalStorage();
+
+    this.savedVideosMap.get(videoId).remove();
+    this.savedVideosMap.delete(videoId);
+
+    if (this.savedVideosMap.size === 0) {
+      $.show(this.$noSavedVideoImage);
+    }
   }
 
   saveVideoItem({ videoId, item }) {
@@ -42,18 +67,22 @@ export default class WatchLaterVideoWrapper {
       ].remove();
     }
 
+    this.updateLocalStorage();
+
+    deliveryMan.deliverMessage(MESSAGE.VIDEO_SAVED, {
+      savedVideosCount: this.savedVideoItemsMap.size,
+    });
+
+    this.renderSingleVideo(item);
+  }
+
+  updateLocalStorage() {
     localStorage.setItem(
       LOCAL_STORAGE_KEY.SAVED_VIDEO_ITEMS,
       JSON.stringify(this.savedVideoItemsMap, (key, value) =>
         value instanceof Map ? Array.from(value) : value
       )
     );
-
-    deliveryMan.deliverMessage(MESSAGE.VIDEO_SAVED, {
-      savedVideosCount: this.savedVideoItemsMap.size,
-    });
-
-    this.renderSingleVideo(item); // 하나만 렌더
   }
 
   hideIfVideoIsSaved({ videoId, callback }) {
@@ -65,11 +94,8 @@ export default class WatchLaterVideoWrapper {
   render() {
     if (this.savedVideoItemsMap.size === 0) {
       $.show(this.$noSavedVideoImage);
-
       return;
     }
-
-    $.hide(this.$noSavedVideoImage);
 
     this.savedVideoItemsMap.forEach(this.renderSingleVideo.bind(this));
   }
@@ -83,6 +109,9 @@ export default class WatchLaterVideoWrapper {
     );
 
     const $video = this.$watchLaterVideoWrapper.children[0];
-    renderVideo($video, item);
+    renderWatchLaterVideo($video, item);
+
+    const { videoId } = item.id;
+    this.savedVideosMap.set(videoId, $video);
   }
 }
