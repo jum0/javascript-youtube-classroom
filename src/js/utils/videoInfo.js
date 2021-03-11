@@ -3,8 +3,8 @@ import deliveryMan from "../deliveryMan.js";
 import { $ } from "./DOM.js";
 
 const SAVED_VIDEO_BUTTON_TEMPLATE = `
-<div class="d-flex justify-end --hidden js-save-video-button-wrapper">
-  <button class="btn js-save-video-button">⬇️ 저장</button> 
+<div class="${CLASSNAME.SAVE_VIDEO_BUTTON_WRAPPER} d-flex justify-end --hidden">
+  <button class="${CLASSNAME.SAVE_VIDEO_BUTTON} btn">⬇️ 저장</button> 
 </div>
 `;
 
@@ -17,10 +17,10 @@ const ICON_BUTTONS_TEMPLATE = `
 </div>`;
 
 const GENERATE_TEMPLATE = (buttonTemplate) => `
-<article class="clip skeleton">
+<article class="clip ${CLASSNAME.SKELETON}">
   <div class="preview-container">
     <iframe
-    class="image js-video-id"
+    class="${CLASSNAME.VIDEO_ID} image"
     width="100%"
       height="118"
       frameborder="0"
@@ -29,15 +29,15 @@ const GENERATE_TEMPLATE = (buttonTemplate) => `
     ></iframe>
   </div>
   <div class="content-container pt-2 px-1">
-    <h3 class="line js-video-title"></h3>
+    <h3 class="${CLASSNAME.VIDEO_TITLE} line"></h3>
     <div>
       <a
         target="_blank"
-        class="line channel-name mt-1 js-channel-title"
+        class="${CLASSNAME.CHANNEL_TITLE} line channel-name mt-1"
       >
       </a>
       <div class="line meta">
-        <p class="js-published-at">
+        <p class="${CLASSNAME.PUBLISHED_AT}">
         </p>
       </div>
       ${buttonTemplate}
