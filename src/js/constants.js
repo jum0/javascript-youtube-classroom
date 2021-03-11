@@ -28,6 +28,7 @@ const CLASSNAME = Object.freeze({
   SKELETON: "skeleton",
   OPEN: "open",
   HIDDEN: "--hidden",
+  BG_CYAN_100: "bg-cyan-100",
 });
 
 const MESSAGE = Object.freeze({
